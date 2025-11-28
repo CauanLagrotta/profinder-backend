@@ -1,0 +1,16 @@
+services:
+  database:
+    image: postgres
+    container_name: profinder-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: profinder
+    volumes:
+      - profinder-data:/var/lib/postgresql
+
+volumes:
+  profinder-data: {}
+

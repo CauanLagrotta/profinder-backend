@@ -1,13 +1,22 @@
 CREATE TABLE "categories" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(100) NOT NULL,
-	CONSTRAINT "categories_name_unique" UNIQUE("name")
+	"slug" varchar(100) NOT NULL,
+	CONSTRAINT "categories_name_unique" UNIQUE("name"),
+	CONSTRAINT "categories_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
 CREATE TABLE "locations" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"city" varchar(100) NOT NULL,
 	"state" varchar(100) NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "post_images" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"post_id" uuid NOT NULL,
+	"url" text NOT NULL,
+	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
 CREATE TABLE "posts" (
@@ -43,6 +52,7 @@ CREATE TABLE "users" (
 	"password" varchar(255) NOT NULL,
 	"ddd" varchar(2),
 	"phone" varchar(9),
+	"avatar_url" varchar(500),
 	"bio" text,
 	"rating" integer DEFAULT 0 NOT NULL,
 	"created_at" timestamp DEFAULT now(),
@@ -51,6 +61,7 @@ CREATE TABLE "users" (
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
+ALTER TABLE "post_images" ADD CONSTRAINT "post_images_post_id_posts_id_fk" FOREIGN KEY ("post_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "posts" ADD CONSTRAINT "posts_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "posts" ADD CONSTRAINT "posts_category_id_categories_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

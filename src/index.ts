@@ -65,9 +65,9 @@ async function main() {
     const insertedCategories = await db
         .insert(categories)
         .values([
-            { name: "Eletricista" },
-            { name: "Encanador" },
-            { name: "Pintura" },
+            { name: "Eletricista", slug: "eletricista" },
+            { name: "Encanador", slug: "encanador" },
+            { name: "Pintura", slug: "pintura" },
         ])
         .returning();
 

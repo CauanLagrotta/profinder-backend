@@ -18,6 +18,7 @@ export const users = pgTable("users", {
     password: varchar("password", { length: 255 }).notNull(),
     ddd: varchar("ddd", { length: 2 }),
     phone: varchar("phone", { length: 9 }),
+    avatarUrl: varchar("avatar_url", { length: 500 }),
     bio: text("bio"),
     rating: integer("rating").notNull().default(0),
     createdAt: timestamp("created_at").defaultNow(),
@@ -30,6 +31,7 @@ export const users = pgTable("users", {
 export const categories = pgTable("categories", {
     id: uuid("id").primaryKey().defaultRandom(),
     name: varchar("name", { length: 100 }).notNull().unique(),
+    slug: varchar("slug", { length: 100 }).notNull().unique(),
 });
 
 // ========== POSTS ==========
@@ -42,6 +44,16 @@ export const posts = pgTable("posts", {
 
     userId: uuid("user_id").notNull().references(() => users.id),
     categoryId: uuid("category_id").references(() => categories.id),
+});
+
+export const postImages = pgTable("post_images", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    postId: uuid("post_id")
+        .notNull()
+        .references(() => posts.id, { onDelete: "cascade" }),
+
+    url: text("url").notNull(),
+    createdAt: timestamp("created_at").defaultNow(),
 });
 
 // ========== REVIEWS ==========
@@ -87,4 +99,12 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
     }),
     reviews: many(reviews),
     savedBy: many(savedPosts),
+    images: many(postImages),
+}));
+
+export const postImagesRelations = relations(postImages, ({ one }) => ({
+    post: one(posts, {
+        fields: [postImages.postId],
+        references: [posts.id],
+    }),
 }));

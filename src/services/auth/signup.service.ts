@@ -1,5 +1,4 @@
 import { hash } from "bcryptjs";
-import { drizzle } from "drizzle-orm/singlestore";
 import { eq } from "drizzle-orm";
 import { db } from "../../db";
 import { users } from "../../db/schema";

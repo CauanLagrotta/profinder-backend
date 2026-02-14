@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    /* Build */
+    "rootDir": ".",
+    "outDir": "./dist",
+    "removeComments": true,
+
+    /* Module */
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+
+    /* Types */
+    "types": ["node"],
+
+    /* Emit */
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    /* Strict */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    /* Habilitar depois de ajustar o código: "exactOptionalPropertyTypes", "noUnusedLocals", "noUnusedParameters" */
+
+    /* Module interop */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts", "drizzle.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

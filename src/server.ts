@@ -9,6 +9,8 @@ import express, {
 import cors from "cors";
 import { mainRoutes } from "./routes/main.routes";
 import { env } from "./env";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./configuration/swagger.config";
 import { ZodError } from "zod";
 
 const app = express();
@@ -23,6 +25,7 @@ app.use(
 
 app.use(express.json());
 app.use(mainRoutes);
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const errorHandler: ErrorRequestHandler = (
   err: Error,
